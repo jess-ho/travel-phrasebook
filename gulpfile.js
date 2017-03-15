@@ -7,8 +7,6 @@ const browserSync = require('browser-sync');
 const reload = browserSync.reload;
 const notify = require('gulp-notify');
 const plumber = require('gulp-plumber');
-// do i need this in gulpfile.js or app.js
-const translate = require('google-translate-api')
 
 gulp.task('js', () => {
     browserify('src/app.js', {debug: true})

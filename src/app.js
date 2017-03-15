@@ -2,62 +2,35 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { ajax } from 'jquery'
 
-import Header from './components/header.js'
-import Footer from './components/footer.js'
-
-const translate = require('google-translate-api');
+const API_KEY = 'trnsl.1.1.20170315T202905Z.6be093cc8dd06cdb.389999d1b18d001916b3e5e72fba8e41712b3386'
 
 class App extends React.Component {
 	constructor() {
 		super()
 		this.state = {
-			phrase: '',
-			phraseLog: []
+			langs: []
 		}
-		this.handleSubmit = this.handleSubmit.bind(this)
 	}
 	componentDidMount() {
-		translate('Ik spreek Engels', {to: 'en'}).then(res => {
-		    console.log(res.text);
-		    //=> I speak English
-		    console.log(res.from.language.iso);
-		    //=> nl
-		}).catch(err => {
-		    console.error(err);
-		});
-	}
-	handleChange(e) {
-		this.setState({
-			[e.target.name]: [e.target.value]
+		ajax({
+			url: 'https://translate.yandex.net/api/v1.5/tr.json/getLangs',
+			method: 'GET',
+			dataType: 'json',
+			data: {
+				key: API_KEY,
+				ui: 'en'
+			}
+		}).then((res) => {
+			this.setState({
+				langs: res.langs
+			})
+			console.log(Object.values(this.state.langs))
 		})
-	}
-	handleSubmit(e) {
-		e.preventDefault()
-
 	}
 	render() {
 		return (
 			<main>
-				<Header />
 
-				<form onSubmit={this.handleSubmit}>
-					<input onChange={this.handleChange}/>
-					<input />
-
-					<div></div>
-					<div></div>
-
-					<button>Submit</button>
-					<button>Save</button>
-				</form>
-
-				<section>
-					<ul>
-						<li></li>
-					</ul>
-				</section>
-
-				<Footer />
 			</main>
 		)
 	}
