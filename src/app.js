@@ -22,14 +22,29 @@ class App extends React.Component {
 			}
 		}).then((res) => {
 			this.setState({
-				langs: res.langs
+				langs: Object.values(res.langs)
 			})
-			console.log(Object.values(this.state.langs))
 		})
 	}
 	render() {
+		const languages = this.state.langs.sort().map((lang, i) => {
+			return (
+				<option value="" key={`lang-${i}`}>
+					{lang}
+				</option>
+			)
+		})
 		return (
 			<main>
+				<form action="" onSubmit={handleSubmit}>
+					<select name="" id="">
+						{languages}
+					</select>
+
+					<input type="text"/>
+					<button>Translate</button>
+				</form>
+
 
 			</main>
 		)
