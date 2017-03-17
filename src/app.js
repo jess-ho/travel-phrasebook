@@ -12,11 +12,13 @@ class App extends React.Component {
 			langAbbrev: "", // when form is submitted, find the language code key
 			translate: "", // when form is submitted, find the translated text
 			translated: "",
+			saved: [],
 			value: '' // to disable the input
 		}
 		this.handleChange = this.handleChange.bind(this)
 		this.handleSubmit = this.handleSubmit.bind(this)
 		this.handleSelect = this.handleSelect.bind(this)
+		this.handleSave = this.handleSave.bind(this)
 	}
 	componentDidMount() {
 		ajax({
@@ -41,23 +43,21 @@ class App extends React.Component {
 		})
 	}
 	render() {
-
-
-		console.log(this.state.langs)
+		// console.log(this.state.langs)
 		const sortedList = Array.from(this.state.langs).sort((a,b) => {
-			if(a.languageCode < b.languageCode) {
+			if(a.languageName < b.languageName) {
 				return -1;
 			}
-			if(a.languageCode > b.languageCode) {
+			if(a.languageName > b.languageName) {
 				return 1;
 			}
 			return 0
 		});
-		console.log(sortedList);
+		// console.log(sortedList);
 		const langList = sortedList.map((lang, i) => {
 			return (
 				<option key={`lang-${i}`} value={lang.languageCode}>
-					{`(${lang.languageCode}) ${lang.languageName}`}
+					{lang.languageName}
 				</option>
 			)
 		})	
@@ -75,7 +75,18 @@ class App extends React.Component {
 				</form>
 
 				<section>
-					{this.state.translated}
+					{this.state.translated.toString()}
+					<button onClick={this.handleSave}>Save</button>
+				</section>
+
+				<section>
+					<ul>
+						{this.state.saved.map((text, i) => {
+							return (
+								<li key={`text-${i}`}>{text}</li>
+							)
+						})}
+					</ul>
 				</section>
 			</main>
 		)
@@ -103,9 +114,20 @@ class App extends React.Component {
 			}
 		}).then((data) => {
 			this.setState({
-				translated: data.text.toString()
+				translated: data.text
 			})
 		})
+		console.log(this.state.translated)
+	}
+	handleSave(e) {
+		e.preventDefault()
+		if (this.state.translated !== "") {
+			const savedState = Array.from(this.state.saved)
+			savedState.push(this.state.translated)
+			this.setState({
+				saved: savedState
+			})
+		}
 	}
 }
 
