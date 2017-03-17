@@ -8,47 +8,109 @@ class App extends React.Component {
 	constructor() {
 		super()
 		this.state = {
-			langs: []
+			langs: [], // list of languages for dropdown
+			langAbbrev: "", // when form is submitted, find the language code key
+			translate: "", // when form is submitted, find the translated text
+			translated: "",
+			value: '' // to disable the input
 		}
+		this.handleChange = this.handleChange.bind(this)
+		this.handleSubmit = this.handleSubmit.bind(this)
+		this.handleSelect = this.handleSelect.bind(this)
 	}
 	componentDidMount() {
 		ajax({
 			url: 'https://translate.yandex.net/api/v1.5/tr.json/getLangs',
 			method: 'GET',
-			dataType: 'json',
+			dataType: 'jsonp',
 			data: {
 				key: API_KEY,
 				ui: 'en'
 			}
 		}).then((res) => {
+			const languages = []
+			for (let lang in res.langs) {
+				languages.push({
+					languageCode: lang,
+					languageName: res.langs[lang]
+				})
+			}
 			this.setState({
-				langs: Object.values(res.langs)
+				langs: languages
 			})
 		})
 	}
 	render() {
-		const languages = this.state.langs.sort().map((lang, i) => {
+
+
+		console.log(this.state.langs)
+		const sortedList = Array.from(this.state.langs).sort((a,b) => {
+			if(a.languageCode < b.languageCode) {
+				return -1;
+			}
+			if(a.languageCode > b.languageCode) {
+				return 1;
+			}
+			return 0
+		});
+		console.log(sortedList);
+		const langList = sortedList.map((lang, i) => {
 			return (
-				<option value="" key={`lang-${i}`}>
-					{lang}
+				<option key={`lang-${i}`} value={lang.languageCode}>
+					{`(${lang.languageCode}) ${lang.languageName}`}
 				</option>
 			)
-		})
+		})	
+		// const translatedText
+		/*disabled={!this.state.value}*/
 		return (
 			<main>
-				<form action="" onSubmit={handleSubmit}>
-					<select name="" id="">
-						{languages}
+				<form action="" onSubmit={this.handleSubmit}>
+					<select id="" name="langAbbrev" onChange={this.handleSelect} value={this.state.langAbbrev}>
+						{langList}
 					</select>
 
-					<input type="text"/>
+					<input type="text" name="translate" value={this.state.translate} onChange={this.handleChange} />
 					<button>Translate</button>
 				</form>
 
-
+				<section>
+					{this.state.translated}
+				</section>
 			</main>
 		)
+	}
+	handleSelect(e) {
+		this.setState({
+			[e.target.name]: e.target.value
+		})
+	}
+	handleChange(e) {
+		this.setState({
+			[e.target.name]: e.target.value
+		})
+	}
+	handleSubmit(e) {
+		e.preventDefault()
+		ajax({
+			url: 'https://translate.yandex.net/api/v1.5/tr.json/translate',
+			method: 'GET',
+			dataType: 'jsonp',
+			data: {
+				key: API_KEY,
+				text: this.state.translate,
+				lang: this.state.langAbbrev
+			}
+		}).then((data) => {
+			this.setState({
+				translated: data.text.toString()
+			})
+		})
 	}
 }
 
 ReactDOM.render(<App />, document.getElementById('app'))
+
+
+// componentDidMount for dropdown
+// new event function to call ajax after submit
