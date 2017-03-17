@@ -2,6 +2,11 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { ajax } from 'jquery'
 
+import Header from './components/header.js'
+import Translated from './components/translated.js'
+import Phrasebook from './components/phrasebook.js'
+import Footer from './components/footer.js'
+
 const API_KEY = 'trnsl.1.1.20170315T202905Z.6be093cc8dd06cdb.389999d1b18d001916b3e5e72fba8e41712b3386'
 
 class App extends React.Component {
@@ -10,15 +15,16 @@ class App extends React.Component {
 		this.state = {
 			langs: [], // list of languages for dropdown
 			langAbbrev: "", // when form is submitted, find the language code key
-			translate: "", // when form is submitted, find the translated text
-			translated: "",
-			saved: [],
+			translate: "", // when form is submitted, find the input text
+			translated: [], // translated text
+			saved: [], // list of saved texts
 			value: '' // to disable the input
 		}
 		this.handleChange = this.handleChange.bind(this)
 		this.handleSubmit = this.handleSubmit.bind(this)
 		this.handleSelect = this.handleSelect.bind(this)
 		this.handleSave = this.handleSave.bind(this)
+		this.handleRemove = this.handleRemove.bind(this)
 	}
 	componentDidMount() {
 		ajax({
@@ -43,7 +49,6 @@ class App extends React.Component {
 		})
 	}
 	render() {
-		// console.log(this.state.langs)
 		const sortedList = Array.from(this.state.langs).sort((a,b) => {
 			if(a.languageName < b.languageName) {
 				return -1;
@@ -53,7 +58,6 @@ class App extends React.Component {
 			}
 			return 0
 		});
-		// console.log(sortedList);
 		const langList = sortedList.map((lang, i) => {
 			return (
 				<option key={`lang-${i}`} value={lang.languageCode}>
@@ -64,31 +68,34 @@ class App extends React.Component {
 		// const translatedText
 		/*disabled={!this.state.value}*/
 		return (
-			<main>
-				<form action="" onSubmit={this.handleSubmit}>
-					<select id="" name="langAbbrev" onChange={this.handleSelect} value={this.state.langAbbrev}>
-						{langList}
-					</select>
+			<div>
+				<Header />
 
-					<input type="text" name="translate" value={this.state.translate} onChange={this.handleChange} />
-					<button>Translate</button>
-				</form>
+				<main>
+					<form action="" onSubmit={this.handleSubmit}>
+						<select id="" name="langAbbrev" onChange={this.handleSelect} value={this.state.langAbbrev}>
+							{langList}
+						</select>
 
-				<section>
-					{this.state.translated.toString()}
-					<button onClick={this.handleSave}>Save</button>
-				</section>
+						<input type="text" name="translate" value={this.state.translate} onChange={this.handleChange} />
+						<button>Translate</button>
+					</form>
+				</main>
+
+				<Translated text={this.state.translated.toString()} translate={this.handleSave} />
 
 				<section>
 					<ul>
 						{this.state.saved.map((text, i) => {
 							return (
-								<li key={`text-${i}`}>{text}</li>
+								<Phrasebook key={`text-${i}`} translated={text} index={i} remove={this.handleRemove} />
 							)
 						})}
 					</ul>
 				</section>
-			</main>
+
+				<Footer />
+			</div>
 		)
 	}
 	handleSelect(e) {
@@ -117,22 +124,26 @@ class App extends React.Component {
 				translated: data.text
 			})
 		})
-		console.log(this.state.translated)
 	}
 	handleSave(e) {
 		e.preventDefault()
-		if (this.state.translated !== "") {
+		if (this.state.translated !== []) {
 			const savedState = Array.from(this.state.saved)
-			savedState.push(this.state.translated)
+			savedState.push(`${this.state.translated} (${this.state.translate})`)
 			this.setState({
-				saved: savedState
+				// translate: "",
+				translated: [],
+				saved: savedState 
 			})
 		}
+	}
+	handleRemove(index) {
+		const savedState = Array.from(this.state.saved)
+		savedState.splice(index, 1)
+		this.setState({
+			saved: savedState
+		})
 	}
 }
 
 ReactDOM.render(<App />, document.getElementById('app'))
-
-
-// componentDidMount for dropdown
-// new event function to call ajax after submit
