@@ -7,9 +7,12 @@ const browserSync = require('browser-sync');
 const reload = browserSync.reload;
 const notify = require('gulp-notify');
 const plumber = require('gulp-plumber');
+const sass = require('gulp-sass')
+const concat = require('gulp-concat')
+const autoprefixer = require('gulp-autoprefixer')
 
 gulp.task('js', () => {
-    browserify('src/app.js', {debug: true})
+    browserify('./src/scripts/app.js', {debug: true})
         .transform('babelify', {
             sourceMaps: true,
             presets: ['es2015','react']
@@ -21,9 +24,18 @@ gulp.task('js', () => {
         }))
         .pipe(source('app.js'))
         .pipe(buffer())
-        .pipe(gulp.dest('public/'))
+        .pipe(gulp.dest('public/scripts/'))
         .pipe(reload({stream:true}));
 });
+
+gulp.task('styles', () => {
+    gulp.src('./src/styles/**/*.scss')
+        .pipe(sass().on('error', sass.logError))
+        .pipe(autoprefixer('last 2 versions', 'safari 5', 'ie 8', 'ie 9', 'opera 12.1'))
+        .pipe(concat('styles.css'))
+        .pipe(gulp.dest('./public/styles'))
+        .pipe(reload({stream:true}));
+})
 
 gulp.task('bs', () => {
     browserSync.init({
@@ -33,7 +45,10 @@ gulp.task('bs', () => {
     });
 });
 
-gulp.task('default', ['js','bs'], () => {
-    gulp.watch('src/**/*.js',['js']);
-    gulp.watch('./public/style.css',reload);
-});
+gulp.task('watch', () => {
+        gulp.watch('./src/scripts/*.js',['js']);
+        gulp.watch('./src/styles/*.scss',['styles']);
+        gulp.watch('*.html', reload)
+    })
+
+gulp.task('default', ['watch', 'js', 'styles', 'bs'])
