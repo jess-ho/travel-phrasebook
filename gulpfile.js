@@ -24,7 +24,7 @@ gulp.task('js', () => {
         }))
         .pipe(source('app.js'))
         .pipe(buffer())
-        .pipe(gulp.dest('public/scripts/'))
+        .pipe(gulp.dest('public/scripts'))
         .pipe(reload({stream:true}));
 });
 
@@ -46,7 +46,7 @@ gulp.task('bs', () => {
 });
 
 gulp.task('watch', () => {
-        gulp.watch('./src/scripts/*.js',['js']);
+        gulp.watch('./src/scripts/app.js',['js']);
         gulp.watch('./src/styles/*.scss',['styles']);
         gulp.watch('*.html', reload)
     })

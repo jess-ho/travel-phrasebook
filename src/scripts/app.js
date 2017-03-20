@@ -7,6 +7,15 @@ import Translated from './components/translated.js'
 import Phrasebook from './components/phrasebook.js'
 import Footer from './components/footer.js'
 
+const config = {
+	apiKey: "AIzaSyCAcz0upgMCbR_6PUinLzbeiODXNkNBnyQ",
+	authDomain: "travel-phrasebook.firebaseapp.com",
+	databaseURL: "https://travel-phrasebook.firebaseio.com",
+	storageBucket: "travel-phrasebook.appspot.com",
+	messagingSenderId: "491743154380"
+};
+firebase.initializeApp(config);
+
 const API_KEY = 'trnsl.1.1.20170315T202905Z.6be093cc8dd06cdb.389999d1b18d001916b3e5e72fba8e41712b3386'
 
 class App extends React.Component {
@@ -15,8 +24,9 @@ class App extends React.Component {
 		this.state = {
 			langs: [], // list of languages for dropdown
 			langAbbrev: "", // when form is submitted, find the language code key
-			translate: "", // when form is submitted, find the input text
-			translated: [], // translated text
+			toTranslate: "", // when form is submitted, find the input text
+			translated: "", // translated text
+			toLang: "",
 			saved: [], // list of saved texts
 			value: '' // to disable the input
 		}
@@ -24,7 +34,6 @@ class App extends React.Component {
 		this.handleSubmit = this.handleSubmit.bind(this)
 		this.handleSelect = this.handleSelect.bind(this)
 		this.handleSave = this.handleSave.bind(this)
-		this.handleRemove = this.handleRemove.bind(this)
 	}
 	componentDidMount() {
 		ajax({
@@ -47,6 +56,24 @@ class App extends React.Component {
 				langs: languages
 			})
 		})
+
+		// maybe put this in the header? dunno
+		const dbRef = firebase.database().ref()
+		// firebase.auth().onAuthStateChanged((user) => {
+		// 	if (user) {
+				dbRef.on('value', (data) => {
+					const phraseData = data.val()
+					const savedPhrases = []
+					for (let phraseKey in phraseData) {
+						phraseData[phraseKey].key = phraseKey
+						savedPhrases.push(phraseData[phraseKey])
+					}
+					this.setState({
+						saved: savedPhrases
+					})
+				})
+		// 	}
+		// })
 	}
 	render() {
 		const sortedList = Array.from(this.state.langs).sort((a,b) => {
@@ -60,7 +87,7 @@ class App extends React.Component {
 		});
 		const langList = sortedList.map((lang, i) => {
 			return (
-				<option key={`lang-${i}`} value={lang.languageCode}>
+				<option key={i} value={lang.languageCode}>
 					{lang.languageName}
 				</option>
 			)
@@ -73,23 +100,21 @@ class App extends React.Component {
 
 				<main>
 					<form action="" onSubmit={this.handleSubmit}>
-						<select id="" name="langAbbrev" onChange={this.handleSelect} value={this.state.langAbbrev}>
+						<select id="" name="langAbbrev" onChange={this.handleSelect}>
 							{langList}
 						</select>
-
-						<input type="text" name="translate" value={this.state.translate} onChange={this.handleChange} />
+						
+						<input type="text" name="toTranslate" onChange={this.handleChange} value={this.state.toTranslate} />
 						<button>Translate</button>
 					</form>
 				</main>
 
-				<Translated text={this.state.translated.toString()} translate={this.handleSave} />
+				<Translated text={this.state.translated} translate={this.handleSave} />
 
 				<section>
 					<ul>
 						{this.state.saved.map((text, i) => {
-							return (
-								<Phrasebook key={`text-${i}`} translated={text} index={i} remove={this.handleRemove} />
-							)
+							return <Phrasebook key={text.key} saved={text} remove={this.handleRemove} />
 						})}
 					</ul>
 				</section>
@@ -116,33 +141,35 @@ class App extends React.Component {
 			dataType: 'jsonp',
 			data: {
 				key: API_KEY,
-				text: this.state.translate,
+				text: this.state.toTranslate,
 				lang: this.state.langAbbrev
 			}
 		}).then((data) => {
+			console.log(data)
 			this.setState({
+				toLang: data.lang,
 				translated: data.text
 			})
 		})
 	}
 	handleSave(e) {
 		e.preventDefault()
-		if (this.state.translated !== []) {
-			const savedState = Array.from(this.state.saved)
-			savedState.push(`${this.state.translated} (${this.state.translate})`)
-			this.setState({
-				// translate: "",
-				translated: [],
-				saved: savedState 
-			})
+		const savedState = {
+			langAbbrev: this.state.langAbbrev,
+			toTranslate: this.state.toTranslate,
+			translated: this.state.translated
 		}
-	}
-	handleRemove(index) {
-		const savedState = Array.from(this.state.saved)
-		savedState.splice(index, 1)
 		this.setState({
-			saved: savedState
+			langAbbrev: "",
+			toTranslate: "",
+			translated: ""
 		})
+		const dbRef = firebase.database().ref()
+		dbRef.push(savedState)
+	}
+	handleRemove(removePhrase) {
+		const dbRef = firebase.database().ref(removePhrase)
+		dbRef.remove()
 	}
 }
 
