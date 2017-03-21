@@ -20,9 +20,6 @@ main {
 	display: flex;
 	align-items: flex-start;
 }
-section {
-	box-shadow: 0 0 2px $mellowColor;
-}
 
 .toTranslate {
 	width: 60%;
@@ -47,7 +44,7 @@ button {
 	background: transparent;
 	border: 1px solid $accentColor;
 	border-radius: 2px;
-	box-shadow: 1px 2px 2px $mellowColor;
+	box-shadow: -1px 2px 2px $mellowColor;
 	font-weight: bold;
 	padding: 7px 30px;
 	transform: scale(1);
@@ -62,6 +59,9 @@ button {
 
 .toSave {
 	width: 40%;
+	border: 1px solid gray;
+	border-radius: 1px;
+	box-shadow: -3px 4px 10px $mellowColor;
 
 	ul {
 		width: 90%;
@@ -112,7 +112,6 @@ select {
 .translated {
 	position: relative;
 	padding: 20px;
-	box-shadow: -1px 0 1px $mellowColor;
 
 	p.credit {
 		padding: 20px 0 0;
@@ -124,6 +123,17 @@ select {
 
 	button {
 		margin: 20px;
+	}
+
+	&::before {
+		content: '';
+		width: 85%;
+		height: 2px;
+		position: absolute;
+		top: 0;
+		left: 50%;
+		transform: translateX(-50%);
+		background: $mellowColor;
 	}
 }
 
