@@ -18,11 +18,6 @@ firebase.initializeApp(config);
 
 const API_KEY = 'trnsl.1.1.20170315T202905Z.6be093cc8dd06cdb.389999d1b18d001916b3e5e72fba8e41712b3386'
 
-// make new modal component for sign up/login form 
-// create new button for sign out, default disabled
-// disable buttons for sign up/login when user is logged in
-// figure out how to actually disable a fucking button
-
 class App extends React.Component {
 	constructor() {
 		super()
@@ -30,9 +25,10 @@ class App extends React.Component {
 			langs: [], // list of languages for dropdown
 			langAbbrev: "", // when form is submitted, find the language code key
 			toTranslate: "", // when form is submitted, find the input text
-			translated: "", // translated text
+			translated: "Translation here", // translated text
 			toLang: "",
 			saved: [], // list of saved texts
+			loggedin: false,
 			value: '' // to disable the input
 		}
 		this.handleChange = this.handleChange.bind(this)
@@ -62,11 +58,9 @@ class App extends React.Component {
 			})
 		})
 
-		// maybe put this in the header? dunno
-		const dbRef = firebase.database().ref()
 		firebase.auth().onAuthStateChanged((user) => {
 			if (user) {
-				dbRef.on('value', (data) => {
+				firebase.database().ref(`users/${user.uid}/phrases`).on('value', (data) => {
 					const phraseData = data.val()
 					const savedPhrases = []
 					for (let phraseKey in phraseData) {
@@ -74,13 +68,28 @@ class App extends React.Component {
 						savedPhrases.push(phraseData[phraseKey])
 					}
 					this.setState({
-						saved: savedPhrases
+						saved: savedPhrases,
+						loggedin: true
 					})
 				})
 			} else {
-				
+				this.setState({
+					saved: [],
+					loggedin: false
+				})
 			}
 		})
+	}
+	phrasebook() {
+		if (this.state.loggedin === true) {
+			return this.state.saved.map((text, i) => {
+				return <Phrasebook key={text.key} saved={text} remove={this.handleRemove} />
+			})
+		} else {
+			return (
+				<p>Log in to save your favourite phrases!</p>
+			)
+		}
 	}
 	render() {
 		const sortedList = Array.from(this.state.langs).sort((a,b) => {
@@ -99,23 +108,22 @@ class App extends React.Component {
 				</option>
 			)
 		})	
-		// const translatedText
-		/*disabled={!this.state.value}*/
 		return (
 			<div>
 				<Header />
 
 				<main>
+					<div className="hide"></div>
 					<section className="toTranslate">
-						<h2>Translation</h2>
 						<form action="" onSubmit={this.handleSubmit}>
+							<h2>Original Text</h2>
 							<label htmlFor="langAbbrev">Choose your language: </label>
 							<select id="" name="langAbbrev" onChange={this.handleSelect}>
 								{langList}
 							</select>
 							
 							<label htmlFor="toTranslate">Enter text here: </label>
-							<input type="text" name="toTranslate" onChange={this.handleChange} value={this.state.toTranslate} placeholder="Good Morning!" />
+							<input type="text" name="toTranslate" onChange={this.handleChange} value={this.state.toTranslate} placeholder="i.e. Good Morning!" />
 							<button>Translate</button>
 						</form>
 					
@@ -125,9 +133,7 @@ class App extends React.Component {
 					<section className="toSave">
 						<h2>Phrasebook</h2>
 						<ul>
-							{this.state.saved.map((text, i) => {
-								return <Phrasebook key={text.key} saved={text} remove={this.handleRemove} />
-							})}
+							{this.phrasebook()}
 						</ul>
 					</section>
 				</main>
@@ -162,6 +168,8 @@ class App extends React.Component {
 				toLang: data.lang,
 				translated: data.text
 			})
+		}).fail(() => {
+			alert('Try again!')
 		})
 	}
 	handleSave(e) {
@@ -173,15 +181,20 @@ class App extends React.Component {
 			toLang: this.state.toLang
 		}
 		this.setState({
-			langAbbrev: "",
 			toTranslate: "",
-			translated: ""
+			translated: "Translation here"
 		})
-		const dbRef = firebase.database().ref()
-		dbRef.push(savedState)
+		if (this.state.langAbbrev !== "" && this.state.toTranslate !== "" && this.state.translated !== "" && this.state.toLang !== "") {
+			const userId = firebase.auth().currentUser.uid
+			const dbRef = firebase.database().ref(`users/${userId}/phrases`)
+			dbRef.push(savedState)
+		} else {
+			alert('Try again')
+		}
 	}
 	handleRemove(removePhrase) {
-		const dbRef = firebase.database().ref(removePhrase)
+		const userId = firebase.auth().currentUser.uid
+		const dbRef = firebase.database().ref(`users/${userId}/phrases/${removePhrase}`)
 		dbRef.remove()
 	}
 }

@@ -1,2 +1,6 @@
 node_modules
 public
+functions
+.firebasesrc
+database.rules.json
+firebase.json
