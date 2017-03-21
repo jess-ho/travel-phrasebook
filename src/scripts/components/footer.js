@@ -4,8 +4,12 @@ export default class Footer extends React.Component {
 	render() {
 		return (
 			<footer>
-				<p>&copy; Jessica Ho | HackerYou Student</p>
-				<div>Social</div>
+				<div>
+					<p>&copy; Jessica Ho | HackerYou Student</p>
+					<div>
+						<a href="https://twitter.com/thisisJessHo"><i className="fa fa-twitter"></i></a>
+					</div>
+				</div>
 			</footer>
 		)
 	}

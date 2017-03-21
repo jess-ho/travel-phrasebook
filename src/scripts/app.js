@@ -59,8 +59,8 @@ class App extends React.Component {
 
 		// maybe put this in the header? dunno
 		const dbRef = firebase.database().ref()
-		// firebase.auth().onAuthStateChanged((user) => {
-		// 	if (user) {
+		firebase.auth().onAuthStateChanged((user) => {
+			if (user) {
 				dbRef.on('value', (data) => {
 					const phraseData = data.val()
 					const savedPhrases = []
@@ -72,8 +72,10 @@ class App extends React.Component {
 						saved: savedPhrases
 					})
 				})
-		// 	}
-		// })
+			} else {
+				
+			}
+		})
 	}
 	render() {
 		const sortedList = Array.from(this.state.langs).sort((a,b) => {
@@ -99,25 +101,31 @@ class App extends React.Component {
 				<Header />
 
 				<main>
-					<form action="" onSubmit={this.handleSubmit}>
-						<select id="" name="langAbbrev" onChange={this.handleSelect}>
-							{langList}
-						</select>
-						
-						<input type="text" name="toTranslate" onChange={this.handleChange} value={this.state.toTranslate} />
-						<button>Translate</button>
-					</form>
+					<section className="toTranslate">
+						<h2>Translation</h2>
+						<form action="" onSubmit={this.handleSubmit}>
+							<label htmlFor="langAbbrev">Choose your language: </label>
+							<select id="" name="langAbbrev" onChange={this.handleSelect}>
+								{langList}
+							</select>
+							
+							<label htmlFor="toTranslate">Enter text here: </label>
+							<input type="text" name="toTranslate" onChange={this.handleChange} value={this.state.toTranslate} placeholder="Good Morning!" />
+							<button>Translate</button>
+						</form>
+					
+						<Translated text={this.state.translated} translate={this.handleSave} />
+					</section>
+
+					<section className="toSave">
+						<h2>Phrasebook</h2>
+						<ul>
+							{this.state.saved.map((text, i) => {
+								return <Phrasebook key={text.key} saved={text} remove={this.handleRemove} />
+							})}
+						</ul>
+					</section>
 				</main>
-
-				<Translated text={this.state.translated} translate={this.handleSave} />
-
-				<section>
-					<ul>
-						{this.state.saved.map((text, i) => {
-							return <Phrasebook key={text.key} saved={text} remove={this.handleRemove} />
-						})}
-					</ul>
-				</section>
 
 				<Footer />
 			</div>
@@ -145,7 +153,6 @@ class App extends React.Component {
 				lang: this.state.langAbbrev
 			}
 		}).then((data) => {
-			console.log(data)
 			this.setState({
 				toLang: data.lang,
 				translated: data.text
@@ -157,7 +164,8 @@ class App extends React.Component {
 		const savedState = {
 			langAbbrev: this.state.langAbbrev,
 			toTranslate: this.state.toTranslate,
-			translated: this.state.translated
+			translated: this.state.translated,
+			toLang: this.state.toLang
 		}
 		this.setState({
 			langAbbrev: "",

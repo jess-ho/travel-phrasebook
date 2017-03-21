@@ -1,3 +1,42 @@
+// COLORS
+
+$fontColor: #212121;
+$lightColor: #F5F5F5;
+$accentColor: #FF5252;
+$boldColor: #293323;
+$mellowColor: #526646;
+
+// FONTS
+$headingFont: 'Raleway', sans-serif;
+$textFont: 'Lora', serif;
+
+html {
+	font-family: $textFont;
+}
+
+body {
+	background: $lightColor;
+}
+
+h2 {
+	text-align: center;
+}
+
 ul {
 	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+a {
+	text-decoration: none;
+}
+
+p {
+	margin: 0;
+}
+
+h1, h2, h3 {
+	font-family: $headingFont;
+	font-weight: 600;
 }

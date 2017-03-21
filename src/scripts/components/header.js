@@ -9,7 +9,7 @@ export default class Header extends React.Component {
 			password: '',
 			confirm: ''
 		}
-		this.loginForm = this.loginForm.bind(this)
+		this.toShowForm = this.toShowForm.bind(this)
 		this.handleChange = this.handleChange.bind(this)
 		this.handleLogin = this.handleLogin.bind(this)
 		this.handleSignup = this.handleSignup.bind(this)
@@ -24,8 +24,6 @@ export default class Header extends React.Component {
 		this.setState({
 			[e.target.name]: e.target.value
 		})
-		console.log(this.state.email)
-		console.log(this.state.password)
 	}
 	handleLogin(e) {
 		e.preventDefault()
@@ -34,6 +32,16 @@ export default class Header extends React.Component {
 		.then((user) => {
 			console.log(user)
 		})
+	}
+	handleSignup(e) {
+		e.preventDefault()
+		if (this.state.password === this.state.confirm) {
+			firebase.auth()
+			.createUserWithEmailAndPassword(this.state.email, this.state.password)
+			.then((data) => {
+				console.log(data)
+			})
+		}
 	}
 	render() {
 		let loginForm = ''
@@ -45,26 +53,34 @@ export default class Header extends React.Component {
 					<label htmlFor="password">Password: </label>
 					<input type="password" name="password" onChange={this.handleChange} />
 					<button>Log In</button>
-
-					<div>
-						<p>Don't have an account? <a href="">Sign Up</a></p>
-					</div>
 				</form>
 			)
-		} 
+		} else if (this.state.showForm === 'signup') {
+			loginForm = (
+				<form onSubmit={this.handleSignup}>
+					<label htmlFor="email">Email: </label>
+					<input type="email" name="email" onChange={this.handleChange} />
+					<label htmlFor="password">Password: </label>
+					<input type="password" name="password" onChange={this.handleChange} />
+					<label htmlFor="confirm">Confirm Password: </label>
+					<input type="password" name="confirm" onChange={this.handleChange} />
+					<button>Sign Up</button>
+				</form>
+			)
+		}
 		return (
-			<header>
-				<h1>Portable Phrasebook</h1>
-				<nav>
-					<ul>
-						<li><a href="">Translate</a></li>
-						<li><a href="">Phrasebook</a></li>
-						<li><a href="" className="login" onClick={this.toShowForm}>Log In</a></li>
-						<li><a href="" className="signup" onClick={this.toShowForm}>Sign Up</a></li>
-					</ul>
-				</nav>
+			<div>
+				<header>
+					<h1>Porta-Phrase</h1>
+					<nav>
+						<ul>
+							<li><a href="" className="login" onClick={this.toShowForm}>Log In</a></li>
+							<li><a href="" className="signup" onClick={this.toShowForm}>Sign Up</a></li>
+						</ul>
+					</nav>
+				</header>
 				{loginForm}
-			</header>
+			</div>
 		)
 	}
 }
