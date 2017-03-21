@@ -18,7 +18,10 @@ nav a {
 
 main {
 	display: flex;
-	align-items: center;
+	align-items: flex-start;
+}
+section {
+	box-shadow: 0 0 2px $mellowColor;
 }
 
 .toTranslate {
@@ -31,6 +34,7 @@ main {
 		justify-content: space-between;
 		align-items: center;
 		padding: 20px;
+		// border: 1px solid black;
 
 		button {
 			margin: 20px;
@@ -76,17 +80,25 @@ label {
 	margin: 30px 0 10px;
 }
 
+select, input {
+	width: 100%;
+}
+
+select {
+	background: transparent;
+}
+
 input {
 	border: none;
 	outline: none;
 	background: transparent;
 	padding: 5px 10px;
-	border-top: 2px solid $mellowColor;
+	border-top: 2px solid transparent;
 	border-bottom: 2px solid $mellowColor;
 	transition: all .3s ease;
 
 	&:focus, &:active, &:hover {
-		border-top-color: $boldColor;
+		border-top-color: $mellowColor;
 		border-bottom-color: $boldColor;
 	}
 }
@@ -100,6 +112,7 @@ select {
 .translated {
 	position: relative;
 	padding: 20px;
+	box-shadow: -1px 0 1px $mellowColor;
 
 	p.credit {
 		padding: 20px 0 0;

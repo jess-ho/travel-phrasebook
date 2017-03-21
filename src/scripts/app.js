@@ -18,6 +18,11 @@ firebase.initializeApp(config);
 
 const API_KEY = 'trnsl.1.1.20170315T202905Z.6be093cc8dd06cdb.389999d1b18d001916b3e5e72fba8e41712b3386'
 
+// make new modal component for sign up/login form 
+// create new button for sign out, default disabled
+// disable buttons for sign up/login when user is logged in
+// figure out how to actually disable a fucking button
+
 class App extends React.Component {
 	constructor() {
 		super()
