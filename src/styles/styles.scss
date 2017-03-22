@@ -129,8 +129,10 @@ div.overlay {
 .toSave {
 	width: 100%;
 	border-top: 1px solid $boldColor;
+	text-align: center;
 
 	ul {
+		width: 55%;
 		margin: 0 auto;
 		padding: 20px;
 
