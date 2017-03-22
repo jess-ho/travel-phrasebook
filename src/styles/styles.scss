@@ -96,9 +96,10 @@ div.overlay {
 	position: relative;
 	padding: 20px;
 	width: 50%;
-	// display: flex;
-	// flex-direction: column;
-	// justify-content: space-around;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+	align-items: center;
 	border-left: 1px solid $boldColor;
 
 	p.credit {
