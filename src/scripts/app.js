@@ -86,7 +86,7 @@ class App extends React.Component {
 			})
 		} else {
 			return (
-				<p>Log in to save your favourite phrases!</p>
+				<p className="loginmessage">Log in to save your favourite phrases!</p>
 			)
 		}
 	}
