@@ -28,8 +28,7 @@ class App extends React.Component {
 			translated: "Translation here", // translated text
 			toLang: "",
 			saved: [], // list of saved texts
-			loggedin: false,
-			value: '' // to disable the input
+			loggedin: false
 		}
 		this.handleChange = this.handleChange.bind(this)
 		this.handleSubmit = this.handleSubmit.bind(this)
