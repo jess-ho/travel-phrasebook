@@ -1,26 +1,34 @@
-// COLORS
+/* -- COLORS -- */
 
-$fontColor: #212121;
+$darkColor: #212121;
 $lightColor: #F5F5F5;
 $accentColor: #FF5252;
 $boldColor: #293323;
 $mellowColor: #526646;
+$white: #FFF;
 
-// FONTS
+/* -- FONTS -- */
 $headingFont: 'Raleway', sans-serif;
 $textFont: 'Lora', serif;
 
+/* -- GLOBAL STYLES -- */
 html {
 	font-family: $textFont;
-	color: $fontColor;
+	color: $darkColor;
 }
 
 body {
 	background: $lightColor;
 }
 
+h1, h2 {
+	font-family: $headingFont;
+	font-weight: 600;
+}
+
 h2 {
 	text-align: center;
+	text-decoration: underline;
 }
 
 ul {
@@ -37,7 +45,48 @@ p {
 	margin: 0;
 }
 
-h1, h2, h3 {
-	font-family: $headingFont;
-	font-weight: 600;
+button {
+	color: $accentColor;
+	background: $white;
+	border: 1px solid $accentColor;
+	border-radius: 2px;
+	margin: 20px;
+	font-weight: bold;
+	padding: 7px 30px;
+	transition: all .3s ease; 
+
+	&:focus, &:active, &:hover {
+		background: $accentColor;
+		color: $white;
+		transform: scale(1.1);
+	}
+}
+
+select, input {
+	width: 100%;
+	margin: 10px 0 40px;
+}
+
+input {
+	border: none;
+	outline: none;
+	background: transparent;
+	padding: 5px 10px;
+	border-top: 2px solid transparent;
+	border-bottom: 2px solid $mellowColor;
+	transition: all .3s ease;
+
+	&:focus, &:active, &:hover {
+		border-top-color: $mellowColor;
+		border-bottom-color: $boldColor;
+		background: $white;
+	}
+}
+
+select {
+	border: 1px solid $mellowColor;
+	border-radius: 2px;
+	background: $white;
+	padding: 3px 6px;
+	margin-bottom: 92px;
 }

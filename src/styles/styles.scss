@@ -1,12 +1,17 @@
 @import 'partials/setup';
 @import 'partials/global';
+@import 'partials/logform';
 
+
+/* =========================================================================================================
+HEADER
+========================================================================================================= */
 header {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	padding: 0 35px;
-	background: linear-gradient($fontColor, $fontColor);
+	padding: 40px 35px;
+	background: $darkColor;
 	color: $lightColor;
 
 	ul {
@@ -14,31 +19,33 @@ header {
 	}
 }
 
+/* -- navigation -- */
 nav a {
 	margin: 10px;
-	color: white;
+	color: $lightColor;
+	position: relative;
 }
 
-.loginForm {
+nav a::before {
 	position: absolute;
-	width: 40%;
-	text-align: center;
-	left: 50%;
-	top: 50%;
-	border: 1px solid $mellowColor;
-	border-radius: 1px;
-	transform: translate(-50%, -50%);
-	background: white;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	z-index: 10;
-
-	input {
-		width: inherit;
-	}
+	content: '';
+	margin-bottom: -10px;
+	height: 1px;
+	width: 100%;
+	left: 0;
+	bottom: 0;
+	transform: scale(0);
+	background: $accentColor;
+	transition: all .3s ease;
 }
 
+nav a:hover::before {
+	transform: scaleX(1);
+}
+
+/* ---------------------------------------------------------------------------------------------------------
+MAIN SECTION
+--------------------------------------------------------------------------------------------------------- */
 main {
 	display: flex;
 	flex-direction: column;
@@ -47,6 +54,7 @@ main {
 	z-index: 1;
 }
 
+/* -- overlay -- */
 .hide {
 	opacity: 0;
 	transition: all .3s ease;
@@ -63,21 +71,14 @@ div.overlay {
 	opacity: 1;
 }
 
+/* -- ready to translate section -- */
 .toTranslate {
 	width: 100%;
 	text-align: center;
-	display: flex;
-	// border-right: 1px solid $boldColor;
 
 	form {
-		// display: inline-flex;
 		width: 50%;
-		// flex-direction: column;
-		// justify-content: center;
-		// flex-wrap: wrap;
-		// align-items: center;
 		padding: 20px;
-		// border: 1px solid black;
 
 		button {
 			margin: 20px;
@@ -89,34 +90,46 @@ div.overlay {
 	}
 }
 
-button {
-	color: $accentColor;
-	background: white;
-	border: 1px solid $accentColor;
-	border-radius: 2px;
-	// box-shadow: -1px 2px 2px $mellowColor;
-	font-weight: bold;
-	padding: 7px 30px;
-	transform: scale(1);
-	transition: all .3s ease; 
+/* -- finished translation, ready to save section -- */
+.translated {
+	position: relative;
+	padding: 20px;
+	width: 50%;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+	border-left: 1px solid $boldColor;
 
-	&:focus, &:active, &:hover {
-		// background: $accentColor;
-		// color: white;
-		transform: scale(1.1);
+	p.credit {
+		padding: 30px 0 0;
+
+		a {
+			transition: all .3s ease;
+			font-weight: bold;
+			color: $mellowColor;
+		}
+
+		& a:hover {
+			color: $accentColor;
+		}
+	}
+
+	p {
+		padding: 80px;
+	}
+
+
+	.translation {
+		font-size: 30px;
 	}
 }
 
+/* -- saved translation section -- */
 .toSave {
 	width: 100%;
-	// border: 1px solid gray;
-	// border-radius: 1px;
-	// box-shadow: -3px 4px 10px $mellowColor;
-	// background: white;
-	// height: 100%;
+	border-top: 1px solid $boldColor;
 
 	ul {
-		width: 55%;
 		margin: 0 auto;
 		padding: 20px;
 
@@ -127,75 +140,36 @@ button {
 			margin: 10px 0;
 		}
 	}
-
-	p {
-		text-align: center;
-	}
 }
-
-select, input {
-	width: 100%;
-	margin: 10px 0 40px;
-}
-
-input {
-	border: none;
-	outline: none;
-	background: transparent;
-	padding: 5px 10px;
-	border-top: 2px solid transparent;
-	border-bottom: 2px solid $mellowColor;
-	transition: all .3s ease;
-
-	&:focus, &:active, &:hover {
-		border-top-color: $mellowColor;
-		border-bottom-color: $boldColor;
-		background: white;
-	}
-}
-
-select {
-	border: 1px solid $mellowColor;
-	border-radius: 2px;
-	background: white;
-	padding: 3px 6px;
-	margin-bottom: 92px;
-}
-
-.translated {
-	position: relative;
-	padding: 20px;
-	width: 50%;
-	// border-top: 1px solid $boldColor;
-	// background: white;
-	// border: 1px solid black;
-
-	p.credit {
-		padding: 30px 0 0;
-	}
-
-	p {
-		padding: 80px;
-	}
-
-	button {
-		margin: 20px;
-	}
-}
-
-.translation {
-	font-size: 30px;
-}
-
 
 .remove {
 	padding: 7px 13px;
-	// border: none;
-	box-shadow: none;
+	margin-left: 20px;
 }
 
+/* ---------------------------------------------------------------------------------------------------------
+FOOTER SECTION
+--------------------------------------------------------------------------------------------------------- */
 footer {
 	text-align: center;
 	padding: 20px;
-	border-top: 1px solid $boldColor;
+	background: $darkColor;
+	color: $lightColor;
+
+	p {
+		margin-bottom: 20px;
+	}
+
+	a {
+		color: $lightColor;
+		margin: 0 40px;	
+		font-size: 18px;
+		transition: all .3s ease;
+
+		&:hover {
+			color: $accentColor;
+		}
+	}
 }
+
+@import 'partials/media';

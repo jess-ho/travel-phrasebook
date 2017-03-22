@@ -43,7 +43,7 @@ export default class Header extends React.Component {
 					success: ''
 				})
 				document.getElementsByClassName('hide')[0].classList.remove('overlay')
-			}, 1000)
+			}, 3000)
 		})
 		.catch(() => {
 			alert('Please try again')
@@ -64,7 +64,7 @@ export default class Header extends React.Component {
 						success: ''
 					})
 					document.getElementsByClassName('hide')[0].classList.remove('overlay')
-				}, 1000)
+				}, 3000)
 			})
 			.catch(() => {
 				alert('Please try again')

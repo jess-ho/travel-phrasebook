@@ -1,0 +1,53 @@
+@media all and (max-width: 890px) {
+	.translated .translation {
+		padding: 80px 0 50px;
+	}
+}
+
+@media all and (max-width: 800px) {
+	.toTranslate {
+		flex-direction: column;
+
+		form {
+			width: 100%;
+		}
+	}
+
+	.translated {
+		width: 100%;
+		border-right: none;
+		border-top: 1px solid $boldColor;
+		background: $fontColor;
+		color: $lightColor;
+
+		button {
+			color: white;
+			background: $accentColor;
+
+			&:hover {
+				color: $accentColor;
+				background: white;
+			}
+		}
+	}
+}
+
+@media all and (max-width: 650px) {
+	header {
+		flex-direction: column;
+	}
+
+	.toSave ul li {
+		flex-direction: column;
+		margin: 30px 0;
+		text-align: center;
+	}
+
+	.toSave button {
+		margin-top: 15px;
+	}
+
+	.loginForm {
+		width: 85%;
+	}
+}
