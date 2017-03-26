@@ -10,7 +10,7 @@ header {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	padding: 40px 35px;
+	padding: 40px 60px;
 	background: $darkColor;
 	color: $lightColor;
 
@@ -21,7 +21,7 @@ header {
 
 /* -- navigation -- */
 nav a {
-	margin: 10px;
+	margin-left: 60px;
 	color: $lightColor;
 	position: relative;
 }
@@ -76,18 +76,40 @@ div.overlay {
 	width: 100%;
 	text-align: center;
 	display: flex;
+	justify-content: center;
+	padding: 20px 0;
+	background: $darkColor;
 
 	form {
-		width: 50%;
+		width: calc(50% - 30px);
 		padding: 20px;
+		margin-right: 10px;
+		// border: 1px solid lightgray;
+		background: #F3F3F4;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: space-between;
 
 		button {
-			margin: 20px;
+			// margin: 20px;
+			// display: inline-block;
+		}
+
+		input, select {
+			// width: 100%;
+			display: block;
+			margin: 0 auto;
 		}
 	}
 
+	.forminput {
+		width: 50%;
+		margin: 20px 0;
+	}
+
 	h2 {
-		margin-bottom: 40px;
+		// margin-bottom: 40px;
 	}
 }
 
@@ -95,26 +117,14 @@ div.overlay {
 .translated {
 	position: relative;
 	padding: 20px;
-	width: 50%;
+	width: calc(50% - 30px);
+	// margin-left: 10px;
 	display: flex;
 	flex-direction: column;
-	justify-content: space-around;
+	justify-content: space-between;
 	align-items: center;
-	border-left: 1px solid $boldColor;
-
-	p.credit {
-		padding: 30px 0 0;
-
-		a {
-			transition: all .3s ease;
-			font-weight: bold;
-			color: $mellowColor;
-		}
-
-		& a:hover {
-			color: $accentColor;
-		}
-	}
+	background: #F3F3F4;
+	// border: 1px solid lightgray;
 
 	p {
 		padding: 80px;
@@ -123,13 +133,15 @@ div.overlay {
 
 	.translation {
 		font-size: 30px;
+		border: 1px dashed #C9BFC1;
 	}
 }
 
 /* -- saved translation section -- */
 .toSave {
 	width: 100%;
-	border-top: 1px solid $boldColor;
+	background: #F3F3F4;
+	// border-top: 1px solid $boldColor;
 	padding: 20px;
 
 	ul {
@@ -169,14 +181,38 @@ footer {
 	}
 
 	a {
-		color: $lightColor;
-		margin: 0 40px;	
+		color: $accentColor;
+		// margin: 0 40px;	
 		font-size: 18px;
 		transition: all .3s ease;
 
 		&:hover {
-			color: $accentColor;
+			color: #E0D3DF;
 		}
+	}
+}
+
+
+p.credit {
+	padding: 30px 0 0;
+
+	a {
+		transition: all .3s ease;
+		font-weight: bold;
+		color: $accentColor;
+		&:hover {
+			color: #E0D3DF;
+		}
+	}
+}
+
+.endNote {
+	display: flex;
+	justify-content: space-between;
+	padding: 0 60px;
+
+	a {
+		margin: 0 40px;
 	}
 }
 

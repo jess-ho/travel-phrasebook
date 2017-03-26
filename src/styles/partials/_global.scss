@@ -7,6 +7,10 @@ $boldColor: #293323;
 $mellowColor: #526646;
 $white: #FFF;
 
+$darkColor: #1D374A;
+$accentColor: #F1592B;
+
+
 /* -- FONTS -- */
 $headingFont: 'Raleway', sans-serif;
 $textFont: 'Lora', serif;
@@ -26,9 +30,16 @@ h1, h2 {
 	font-weight: 600;
 }
 
+h1 {
+	text-transform: uppercase;
+	letter-spacing: 3px;
+	font-size: 40px;
+}
+
 h2 {
 	text-align: center;
-	text-decoration: underline;
+	text-transform: uppercase;
+	letter-spacing: 2px;
 }
 
 ul {
@@ -73,12 +84,12 @@ input {
 	background: transparent;
 	padding: 5px 10px;
 	border-top: 2px solid transparent;
-	border-bottom: 2px solid $mellowColor;
+	border-bottom: 2px solid #BA79B3;
 	transition: all .3s ease;
 
 	&:focus, &:active, &:hover {
-		border-top-color: $mellowColor;
-		border-bottom-color: $boldColor;
+		border-top-color: #BA79B3;
+		border-bottom-color: $darkColor;
 		background: $white;
 	}
 }

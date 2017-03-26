@@ -116,14 +116,14 @@ class App extends React.Component {
 					<section className="toTranslate">
 						<form action="" onSubmit={this.handleSubmit}>
 							<h2>Original Text</h2>
-							<div>
+							<div className="forminput">
 								<label htmlFor="langAbbrev">Choose your language: </label>
 								<select id="" name="langAbbrev" onChange={this.handleSelect}>
 									{langList}
 								</select>
 							</div>
 							
-							<div>
+							<div className="forminput">
 								<label htmlFor="toTranslate">Enter text here: </label>
 								<input type="text" name="toTranslate" onChange={this.handleChange} value={this.state.toTranslate} placeholder="i.e. Good Morning!" />
 							</div>
