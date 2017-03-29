@@ -134,6 +134,29 @@ div.overlay {
 	.translation {
 		font-size: 30px;
 		border: 1px dashed #C9BFC1;
+		position: relative;
+	}
+}
+
+.translateAnimate {
+	animation: jump .7s ease;
+}
+
+@keyframes jump {
+	40% {
+		top: -12px;
+	}
+
+	55% {
+		top: 0;
+	}
+
+	80% {
+		top: -10px;
+	}
+
+	100% {
+		top: 0;
 	}
 }
 

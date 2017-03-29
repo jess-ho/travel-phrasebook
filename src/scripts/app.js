@@ -174,6 +174,13 @@ class App extends React.Component {
 		}).fail(() => {
 			alert('Try again!')
 		})
+
+		// add animation class
+		document.getElementsByClassName('translation')[0].classList.add('translateAnimate')
+		
+		document.getElementsByClassName('translateAnimate')[0].addEventListener('animationend', function() {
+			document.getElementsByClassName('translation')[0].classList.remove('translateAnimate')
+		})
 	}
 	handleSave(e) {
 		e.preventDefault()

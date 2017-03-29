@@ -1,0 +1,555 @@
+article, aside, details, figcaption, figure, footer, header, hgroup, nav, section, summary {
+  display: block;
+}
+
+audio, canvas, video {
+  display: inline-block;
+}
+
+audio:not([controls]) {
+  display: none;
+  height: 0;
+}
+
+[hidden] {
+  display: none;
+}
+
+html {
+  font-family: sans-serif;
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+}
+
+a:focus {
+  outline: thin dotted;
+}
+
+a:active, a:hover {
+  outline: 0;
+}
+
+h1 {
+  font-size: 2em;
+}
+
+abbr[title] {
+  border-bottom: 1px dotted;
+}
+
+b, strong {
+  font-weight: 700;
+}
+
+dfn {
+  font-style: italic;
+}
+
+mark {
+  background: #ff0;
+  color: #000;
+}
+
+code, kbd, pre, samp {
+  font-family: monospace, serif;
+  font-size: 1em;
+}
+
+pre {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+q {
+  quotes: \201C \201D \2018 \2019;
+}
+
+small {
+  font-size: 80%;
+}
+
+sub, sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+
+sup {
+  top: -.5em;
+}
+
+sub {
+  bottom: -.25em;
+}
+
+img {
+  border: 0;
+}
+
+svg:not(:root) {
+  overflow: hidden;
+}
+
+fieldset {
+  border: 1px solid silver;
+  margin: 0 2px;
+  padding: .35em .625em .75em;
+}
+
+button, input, select, textarea {
+  font-family: inherit;
+  font-size: 100%;
+  margin: 0;
+}
+
+button, input {
+  line-height: normal;
+}
+
+button, html input[type=button],
+input[type=reset], input[type=submit] {
+  -webkit-appearance: button;
+  cursor: pointer;
+}
+
+button[disabled], input[disabled] {
+  cursor: default;
+}
+
+input[type=checkbox], input[type=radio] {
+  box-sizing: border-box;
+  padding: 0;
+}
+
+input[type=search] {
+  -webkit-appearance: textfield;
+  -moz-box-sizing: content-box;
+  -webkit-box-sizing: content-box;
+  box-sizing: content-box;
+}
+
+input[type=search]::-webkit-search-cancel-button, input[type=search]::-webkit-search-decoration {
+  -webkit-appearance: none;
+}
+
+textarea {
+  overflow: auto;
+  vertical-align: top;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+body, figure {
+  margin: 0;
+}
+
+legend, button::-moz-focus-inner, input::-moz-focus-inner {
+  border: 0;
+  padding: 0;
+}
+
+.clearfix:after {
+  visibility: hidden;
+  display: block;
+  font-size: 0;
+  content: " ";
+  clear: both;
+  height: 0;
+}
+
+* {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+/* -- COLORS -- */
+/* -- FONTS -- */
+/* -- GLOBAL STYLES -- */
+html {
+  font-family: "Lora", serif;
+  color: #1D374A;
+}
+
+body {
+  background: #F5F5F5;
+}
+
+h1, h2 {
+  font-family: "Raleway", sans-serif;
+  font-weight: 600;
+}
+
+h1 {
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  font-size: 40px;
+}
+
+h2 {
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+a {
+  text-decoration: none;
+}
+
+p {
+  margin: 0;
+}
+
+button {
+  color: #F1592B;
+  background: #FFF;
+  border: 1px solid #F1592B;
+  border-radius: 2px;
+  margin: 20px;
+  font-weight: bold;
+  padding: 7px 30px;
+  transition: all .3s ease;
+}
+
+button:focus, button:active, button:hover {
+  background: #F1592B;
+  color: #FFF;
+  transform: scale(1.1);
+}
+
+select, input {
+  width: 100%;
+  margin: 10px 0 40px;
+}
+
+input {
+  border: none;
+  outline: none;
+  background: transparent;
+  padding: 5px 10px;
+  border-top: 2px solid transparent;
+  border-bottom: 2px solid #BA79B3;
+  transition: all .3s ease;
+}
+
+input:focus, input:active, input:hover {
+  border-top-color: #BA79B3;
+  border-bottom-color: #1D374A;
+  background: #FFF;
+}
+
+select {
+  border: 1px solid #526646;
+  border-radius: 2px;
+  background: #FFF;
+  padding: 3px 6px;
+  margin-bottom: 92px;
+}
+
+/* -- log in form -- */
+.loginForm {
+  padding: 24px;
+  position: absolute;
+  width: 60%;
+  text-align: center;
+  left: 50%;
+  top: 50%;
+  border: 1px solid #526646;
+  border-radius: 1px;
+  transform: translate(-50%, -50%);
+  background: #FFF;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 10;
+}
+
+.loginForm input {
+  width: 50%;
+}
+
+.exit {
+  cursor: pointer;
+  align-self: flex-end;
+}
+
+/* =========================================================================================================
+HEADER
+========================================================================================================= */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 40px 60px;
+  background: #1D374A;
+  color: #F5F5F5;
+}
+
+header ul {
+  display: flex;
+}
+
+/* -- navigation -- */
+nav a {
+  margin-left: 60px;
+  color: #F5F5F5;
+  position: relative;
+}
+
+nav a::before {
+  position: absolute;
+  content: '';
+  margin-bottom: -10px;
+  height: 1px;
+  width: 100%;
+  left: 0;
+  bottom: 0;
+  transform: scale(0);
+  background: #F1592B;
+  transition: all .3s ease;
+}
+
+nav a:hover::before {
+  transform: scaleX(1);
+}
+
+/* ---------------------------------------------------------------------------------------------------------
+MAIN SECTION
+--------------------------------------------------------------------------------------------------------- */
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  position: relative;
+  z-index: 1;
+}
+
+/* -- overlay -- */
+.hide {
+  opacity: 0;
+  transition: all .3s ease;
+}
+
+div.overlay {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  z-index: 9;
+  background: rgba(0, 0, 0, 0.5);
+  opacity: 1;
+}
+
+/* -- ready to translate section -- */
+.toTranslate {
+  width: 100%;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  padding: 20px 0;
+  background: #1D374A;
+}
+
+.toTranslate form {
+  width: calc(50% - 30px);
+  padding: 20px;
+  margin-right: 10px;
+  background: #F3F3F4;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.toTranslate form input, .toTranslate form select {
+  display: block;
+  margin: 0 auto;
+}
+
+.toTranslate .forminput {
+  width: 50%;
+  margin: 20px 0;
+}
+
+/* -- finished translation, ready to save section -- */
+.translated {
+  position: relative;
+  padding: 20px;
+  width: calc(50% - 30px);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  background: #F3F3F4;
+}
+
+.translated p {
+  padding: 80px;
+}
+
+.translated .translation {
+  font-size: 30px;
+  border: 1px dashed #C9BFC1;
+  position: relative;
+}
+
+.translateAnimate {
+  animation: jump .7s ease;
+}
+
+@keyframes jump {
+  40% {
+    top: -12px;
+  }
+  55% {
+    top: 0;
+  }
+  80% {
+    top: -10px;
+  }
+  100% {
+    top: 0;
+  }
+}
+
+/* -- saved translation section -- */
+.toSave {
+  width: 100%;
+  background: #F3F3F4;
+  padding: 20px;
+}
+
+.toSave ul {
+  width: 55%;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.toSave ul li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 10px 0;
+}
+
+.loginmessage {
+  text-align: center;
+}
+
+.remove {
+  padding: 7px 13px;
+  margin-left: 20px;
+}
+
+/* ---------------------------------------------------------------------------------------------------------
+FOOTER SECTION
+--------------------------------------------------------------------------------------------------------- */
+footer {
+  text-align: center;
+  padding: 20px;
+  background: #1D374A;
+  color: #F5F5F5;
+}
+
+footer p {
+  margin-bottom: 20px;
+}
+
+footer a {
+  color: #F1592B;
+  font-size: 18px;
+  transition: all .3s ease;
+}
+
+footer a:hover {
+  color: #E0D3DF;
+}
+
+p.credit {
+  padding: 30px 0 0;
+}
+
+p.credit a {
+  transition: all .3s ease;
+  font-weight: bold;
+  color: #F1592B;
+}
+
+p.credit a:hover {
+  color: #E0D3DF;
+}
+
+.endNote {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 60px;
+}
+
+.endNote a {
+  margin: 0 40px;
+}
+
+@media all and (max-width: 800px) {
+  .toTranslate {
+    flex-direction: column;
+  }
+  .toTranslate form {
+    width: 100%;
+  }
+  .translated {
+    width: 100%;
+    border-right: none;
+    border-top: 1px solid #293323;
+    background: #1D374A;
+    color: #F5F5F5;
+  }
+  .translated button {
+    color: white;
+    background: #F1592B;
+  }
+  .translated button:hover {
+    color: #F1592B;
+    background: white;
+  }
+  .toSave ul {
+    width: 70%;
+  }
+}
+
+@media all and (max-width: 650px) {
+  header {
+    flex-direction: column;
+  }
+  h1 {
+    padding-left: 30px;
+  }
+  nav a {
+    margin: 0 30px;
+  }
+  .toSave ul li {
+    flex-direction: column;
+    margin: 30px 0;
+    text-align: center;
+  }
+  .toSave button {
+    margin-top: 15px;
+  }
+  .loginForm {
+    width: 85%;
+  }
+  .endNote {
+    flex-direction: column;
+    align-items: center;
+  }
+}
