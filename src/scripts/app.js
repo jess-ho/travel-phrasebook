@@ -60,6 +60,7 @@ class App extends React.Component {
 		firebase.auth().onAuthStateChanged((user) => {
 			if (user) {
 				firebase.database().ref(`users/${user.uid}/phrases`).on('value', (data) => {
+					console.log(data.val())
 					const phraseData = data.val()
 					const savedPhrases = []
 					for (let phraseKey in phraseData) {
